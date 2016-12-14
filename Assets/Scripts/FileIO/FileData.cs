@@ -9,6 +9,8 @@ public class FileData : DP_Singleton<FileData> {
     public string workPath;
     public string filePath;
     FileStream fileStream;
+
+
     public string fileName
     {
         get
@@ -62,6 +64,8 @@ public class FileData : DP_Singleton<FileData> {
             fileStream = null;
         }
         fileStream = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+        Debug.Log("FIle : " + _fileName);
+        fileStream.Close();
     }
 
     public void OpenFile()
