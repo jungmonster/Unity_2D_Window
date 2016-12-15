@@ -8,7 +8,6 @@ public class FileData : DP_Singleton<FileData> {
     private string FileName;
     public string workPath;
     public string filePath;
-    FileStream fileStream;
 
 
     public string fileName
@@ -35,7 +34,7 @@ public class FileData : DP_Singleton<FileData> {
 
         AttachCallMember();
 
-        TestCaller();
+        //TestCaller();
     }
 
     void TestCaller()
@@ -45,10 +44,12 @@ public class FileData : DP_Singleton<FileData> {
         CreateFile("test22.txt");
         WriteFileContent("AAAAAAAA");
         OpenFile();
-        ReadFileContent();
+        //ReadFileContent();
         fileObserver.FileChangeCall();
     }
 
+
+    // add observer object 
     void AttachCallMember()
     {
         fileObserver.FileChangeCallAttach(contentPanel.GetComponent<M_ContentPanel>());
@@ -57,24 +58,20 @@ public class FileData : DP_Singleton<FileData> {
 
     public void CreateFile(string _fileName)
     {
+        FileStream fileStream;
         fileName = _fileName;
         filePath = workPath + "/" + fileName;
-        if(fileStream != null)
-        {
-            fileStream = null;
-        }
-        fileStream = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.ReadWrite);
-        Debug.Log("FIle : " + _fileName);
+        fileStream = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite);
+        strBuf = "";
         fileStream.Close();
+        fileObserver.FileChangeCall();
     }
 
     public void OpenFile()
     {
-        if (fileStream != null)
-        {
-            fileStream = null;
-        }
+        FileStream fileStream;
         fileStream = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+
     }
 
     public string GetFileName()
@@ -84,14 +81,18 @@ public class FileData : DP_Singleton<FileData> {
 
     public void WriteFileContent(string str)
     {
-        StreamWriter writer = new StreamWriter(fileStream);
+        Debug.Log("data : " + str);
+
+        StreamWriter writer = new StreamWriter(filePath);
         writer.WriteLine(str);
+
         writer.Close();
     }
 
-    public string ReadFileContent()
+    public string ReadFileContent(string filePath)
     {
-        StreamReader reader = new StreamReader(fileStream);
+        Debug.Log(filePath);
+        StreamReader reader = new StreamReader(filePath);
         strBuf = reader.ReadToEnd();
         reader.Close();
         return strBuf;

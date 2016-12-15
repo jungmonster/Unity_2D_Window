@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 public class M_ContentPanel : MonoBehaviour , IF_FileChange{
     public Text contentPanel_FileName;
-    public Text contentPanel_FileContemt;
+    public Text contentPanel_FileContent;
 
 	void Start () {
 
@@ -21,7 +21,12 @@ public class M_ContentPanel : MonoBehaviour , IF_FileChange{
         }
         Debug.Log("DDDD : " + FileData.GetIstance.fileName);
         contentPanel_FileName.text = FileData.GetIstance.fileName;
-        contentPanel_FileContemt.text = FileData.GetIstance.strBuf;
+        contentPanel_FileContent.text = FileData.GetIstance.strBuf;
 
+    }
+
+    public void SaveButton()
+    {
+        FileData.GetIstance.WriteFileContent(contentPanel_FileContent.text);
     }
 }

@@ -8,6 +8,10 @@ public class M_NewFilePanel : MonoBehaviour {
     public Text NewFIleName;
 
 
+    void Awake()
+    {
+        this.gameObject.SetActive(false);
+    }
 
 	void Start () {
         CurrentFilePath.text = FileData.GetIstance.workPath;
@@ -23,5 +27,11 @@ public class M_NewFilePanel : MonoBehaviour {
     public void CreateFile()
     {
         FileData.GetIstance.CreateFile(NewFIleName.text);
+        this.gameObject.SetActive(false);
+    }
+
+    public void ExitPanel()
+    {
+        this.gameObject.SetActive(false);
     }
 }
