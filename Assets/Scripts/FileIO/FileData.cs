@@ -34,6 +34,7 @@ public class FileData : DP_Singleton<FileData> {
 
         AttachCallMember();
 
+        GetFileList();
         //TestCaller();
     }
 
@@ -94,8 +95,23 @@ public class FileData : DP_Singleton<FileData> {
         Debug.Log(filePath);
         StreamReader reader = new StreamReader(filePath);
         strBuf = reader.ReadToEnd();
+        Debug.Log(strBuf);
         reader.Close();
+        fileObserver.FileChangeCall();
         return strBuf;
+    }
+
+    public void GetFileList()
+    {
+        DirectoryInfo dir = new DirectoryInfo(workPath);
+        FileInfo[] files = dir.GetFiles("*.txt");
+        if(files.Length != 0)
+        {
+            foreach(FileInfo file in files)
+            {
+                Debug.Log(file.Name.ToString());
+            }
+        }
     }
     
 	
